@@ -1,0 +1,27 @@
+{
+  "objects":[
+    {"type":"player", "position":[288,384]},
+    {"type":"platform", "position":[0,448], "size": [640, 32]},
+    {"type":"platform", "position":[0,0], "size": [32, 448]},
+    {"type":"platform", "position":[0,0], "size": [608, 32]},
+    {"type":"platform", "position":[608,0], "size": [32, 448]},
+    {"type":"platform", "position":[272,416], "size": [48, 32]},
+    {"type":"platform", "position":[512,384], "size": [32, 48]},
+    {"type":"platform", "position":[512,64], "size": [32, 104]},
+    {"type":"platform", "position":[256,96], "size": [192, 64]},
+    {"type":"platform", "position":[32,416], "size": [32, 32]},
+    {"type":"platform_fall", "position":[336,216], "size": [32, 32]},
+    {"type":"platform_fall", "position":[400,224], "size": [32, 128]},
+    {"type":"platform_fall", "position":[576,128], "size": [32, 32]},
+    {"type":"platform_fall", "position":[96,192], "size": [32, 32]},
+    {"type":"platform_fall", "position":[192,160], "size": [32, 32]},
+    {"type":"glue", "position":[512,168], "size": [32, 32]},
+    {"type":"damage", "position":[320,256], "size": [80, 16]},
+    {"type":"damage", "position":[320,432], "size": [288, 16]},
+    {"type":"damage", "position":[512,256], "size": [96, 16]},
+    {"type":"damage", "position":[576,32], "size": [32, 16]},
+    {"type":"damage", "position":[32,256], "size": [256, 16]},
+    {"type":"damage", "position":[64,432], "size": [208, 16]},
+    {"type":"goal", "position":[32,384]}
+  ]
+}

@@ -1,0 +1,46 @@
+body {
+     background-color: #CFD8DC;
+}
+
+.container.n-card {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 15px;
+    background-color: white;
+}
+
+.container.n-card-nobg {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 15px;
+}
+
+.btn-primary {
+    color: white !important;
+}
+
+.btn-menu > * {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+}
+
+.btn-menu:before {
+    content: '';
+    padding: 50% 0;
+    display: inline-block;
+}
+
+.custom-file-control::before {
+    display: none;
+}
+
+.custom-file-control {
+    line-height: 90px;
+}
+
+a {
+    color: white !important;
+}

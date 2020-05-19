@@ -1,0 +1,18 @@
+{
+  "objects":[
+    {"type":"player", "position":[64,416]},
+    {"type":"platform", "position":[0,448], "size": [640, 32]},
+    {"type":"platform", "position":[0,0], "size": [32, 448]},
+    {"type":"platform", "position":[0,0], "size": [608, 32]},
+    {"type":"platform", "position":[608,0], "size": [32, 448]},
+    {"type":"platform", "position":[128,416], "size": [64, 32]},
+    {"type":"platform", "position":[288,384], "size": [64, 32]},
+    {"type":"platform", "position":[512,352], "size": [32, 32]},
+    {"type":"platform", "position":[416,192], "size": [32, 32]},
+    {"type":"platform", "position":[256,192], "size": [32, 32]},
+    {"type":"platform", "position":[64,160], "size": [32, 32]},
+    {"type":"damage", "position":[192,432], "size": [416, 16]},
+    {"type":"damage", "position":[32,208], "size": [224, 16]},
+    {"type":"goal", "position":[64,128]}
+  ]
+}
