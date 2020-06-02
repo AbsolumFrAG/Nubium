@@ -49,11 +49,11 @@
     JSONEditor.defaults.iconlib = 'fontawesome4';
     JSONEditor.defaults.editors.object.options.disable_properties = true;
 
-    var editor = new JSONEditor(document.getElementById('editor_holder'),{
+    const editor = new JSONEditor(document.getElementById('editor_holder'), {
         ajax: true,
         schema: {
             type: "object",
-            title: "Level",
+            title: "Niveau",
             properties: {
                 name: {
                     type: "string"
@@ -61,7 +61,7 @@
                 objects: {
                     type: "array",
                     format: "table",
-                    title: "Objects",
+                    title: "Objets",
                     uniqueItems: false,
                     items: {
                         type: "object",
@@ -74,14 +74,15 @@
                                     "platform_fall",
                                     "extrajump",
                                     "damage",
-                                    "goal"
+                                    "goal",
+                                    "glue"
                                 ],
                                 default: "player"
                             },
-                            "position x": { type: "integer" },
-                            "position y": { type: "integer" },
-                            "size x": { type: "integer", default: 1 },
-                            "size y": { type: "integer", default: 1 }
+                            "position x": {type: "integer"},
+                            "position y": {type: "integer"},
+                            "size x": {type: "integer", default: 1},
+                            "size y": {type: "integer", default: 1}
                         }
                     }
                 }
@@ -91,9 +92,9 @@
         required_by_default: true
     });
 
-    function testLevel(){
-        var level = {};
-        var level_editor_json = editor.getValue();
+    function testLevel() {
+        const level = {};
+        const level_editor_json = editor.getValue();
 
         level.name = level_editor_json.name;
         level.objects = [];
@@ -108,13 +109,13 @@
         window.open("game.html?editor");
     }
 
-    function saveLevel(){
-        var level = {};
-        var level_editor_json = editor.getValue();
+    function saveLevel() {
+        const level = {};
+        const level_editor_json = editor.getValue();
 
         level.name = level_editor_json.name;
         level.objects = [];
-        level_editor_json.objects.forEach(function(obj){
+        level_editor_json.objects.forEach(function(obj) {
             level.objects.push({
                 type: obj.type,
                 position: [obj["position x"], obj["position y"]],
@@ -122,18 +123,18 @@
             });
         });
         if (level.name !== undefined && level.name !== "" && typeof level.name === "string") {
-            var lslevels = localStorage.getItem("nubium_levels");
-            var levels = {};
+            const lslevels = localStorage.getItem("nubium_levels");
+            let levels = {};
             if (lslevels !== null && lslevels !== "") levels = JSON.parse(lslevels);
             levels[level.name] = level;
             localStorage.setItem("nubium_levels", JSON.stringify(levels));
-            alert("Level "+level.name+" saved!");
-        } else alert("Invalid level: Invalid name.");
+            alert("Niveau "+level.name+" sauvegardé !");
+        } else alert("Niveau non valide: nom non valide.");
     }
     function getParameterByName(name, url) {
         if (!url) url = window.location.href;
         name = name.replace(/[\[\]]/g, "\\$&");
-        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
             results = regex.exec(url);
         if (!results) return null;
         if (!results[2]) return '';
@@ -141,8 +142,8 @@
     }
 
     function downloadLevel() {
-        var level = {};
-        var level_editor_json = editor.getValue();
+        const level = {};
+        const level_editor_json = editor.getValue();
 
         level.name = level_editor_json.name;
         level.objects = [];
@@ -154,7 +155,7 @@
             });
         });
 
-        var element = document.createElement('a');
+        const element = document.createElement('a');
         element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(JSON.stringify(level)));
         element.setAttribute('download', level.name + '.json');
         element.style.display = 'none';
@@ -165,8 +166,8 @@
 
     if (getParameterByName('level', window.location.href) !== null) {
         try {
-            var level = {};
-            var level_storage = JSON.parse(localStorage.getItem("nubium_levels"))[getParameterByName('level', window.location.href)];
+            const level = {};
+            const level_storage = JSON.parse(localStorage.getItem("nubium_levels"))[getParameterByName('level', window.location.href)];
             level.name = level_storage.name;
             level.objects = [];
             level_storage.objects.forEach(function(obj){
@@ -180,7 +181,7 @@
             });
             editor.setValue(level);
         } catch (e) {
-            alert("Invalid level :(");
+            alert("Niveau invalide :(");
             console.log(e);
         }
     }
