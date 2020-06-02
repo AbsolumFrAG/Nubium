@@ -14,25 +14,29 @@
 /* global Phaser */
 
 function loadLevel(room) {
-    var game = new Phaser.Game($(window).width(), $(window).height(), Phaser.AUTO, '', { preload: preload, create: create, update: update });
-    var first = true;
-    var bounds_x = 0;
-    var bounds_y = 0;
-    var player;
-    var goal;
-    var platforms;
-    var platforms_fall;
-    var damage;
-    var glue;
-    var extrajump;
-    var texts;
-    var keyboard;
-    var vgc;
-    var left;
-    var right;
-    var jump;
-    var jump_boost = false;
-    var jump_glue_cd = 0;
+    const game = new Phaser.Game($(window).width(), $(window).height(), Phaser.AUTO, '', {
+        preload: preload,
+        create: create,
+        update: update
+    });
+    let first = true;
+    let bounds_x = 0;
+    let bounds_y = 0;
+    let player;
+    let goal;
+    let platforms;
+    let platforms_fall;
+    let damage;
+    let glue;
+    let extrajump;
+    let texts;
+    let keyboard;
+    let vgc;
+    let left;
+    let right;
+    let jump;
+    let jump_boost = false;
+    let jump_glue_cd = 0;
 
     function preload() {
         game.stage.backgroundColor = '#78909C';
@@ -58,23 +62,27 @@ function loadLevel(room) {
         vgc = game.add.group();
 
         room['objects'].forEach(function(item, index) {
-            var type = item['type'];
-            var position = item['position'];
-            var size = item['size'];
-            var depth = item['depth'];
+            const type = item['type'];
+            const position = item['position'];
+            let size = item['size'];
+            let depth = item['depth'];
             if (type === "text") {
-                var text = game.add.text(position[0], position[1],item.text, { font: '16px Arial', fill: '#FFF', align: 'center' });
+                const text = game.add.text(position[0], position[1], item.text, {
+                    font: '16px Arial',
+                    fill: '#FFF',
+                    align: 'center'
+                });
                 texts.add(text);
                 return;
             }
             if (size === undefined) size = [0, 0];
             if (depth === undefined) depth = 0;
-            var sprite = game.add.sprite(position[0], position[1], type);
+            const sprite = game.add.sprite(position[0], position[1], type);
             if (position[0] + size[0] > bounds_x) bounds_x = position[0] + size[0];
             if (position[1] + size[1] > bounds_y) bounds_y = position[1] + size[1];
             if (size[0] !== 0) sprite.scale.setTo(size[0], size[1]);
             if (depth !== 0) sprite.z = depth;
-            switch(type) {
+            switch (type) {
                 case 'player': player = sprite; break;
                 case 'platform': platforms.add(sprite); break;
                 case 'platform_fall': platforms_fall.add(sprite); break;
@@ -164,17 +172,17 @@ function loadLevel(room) {
             if(jump_boost) player.body.velocity.y = -700;
             else player.body.velocity.y = -600;
 
-        if ((keyboard['up'].isDown || jump) && jump_glue_cd !== 0){
+        if ((keyboard['up'].isDown || jump) && jump_glue_cd !== 0) {
             player.body.velocity.y = -300;
             jump_glue_cd = 0;
         }
 
-        if(player.body.velocity.x > 0) player.frame = 1;
+        if (player.body.velocity.x > 0) player.frame = 1;
         else if (player.body.velocity.x < 0)  player.frame = 2;
         else player.frame = 0;
         if (player.body.velocity.y < 0) player.frame = 3;
         else if (player.body.velocity.y > 0) player.frame = 4;
-        if(jump_glue_cd !== 0) jump_glue_cd--;
+        if (jump_glue_cd !== 0) jump_glue_cd--;
         jump_boost = false;
     }
 
@@ -192,16 +200,20 @@ function loadLevel(room) {
     }
 
     function playerWin(player, goal) {
-        var win_text = game.add.text(game.width / 2 ,game.height / 2, 'Tu as gagné !', { font: '40px Arial', fill: '#2E7D32', align: 'center' });
+        const win_text = game.add.text(game.width / 2, game.height / 2, 'Tu as gagné !', {
+            font: '40px Arial',
+            fill: '#2E7D32',
+            align: 'center'
+        });
         win_text.anchor.setTo(0.5, 0.5);
         win_text.fixedToCamera = true;
         texts.add(win_text);
-        if (getParameterByName('storage', window.location.href) === "") {
+        if (getParameterByName('storage', window.location.href) === ""){
             try {
-                var levels = JSON.parse(localStorage.getItem("nubium_levels"));
+                const levels = JSON.parse(localStorage.getItem("nubium_levels"));
                 levels[getParameterByName('level', window.location.href)].completed = true;
                 localStorage.setItem("nubium_levels", JSON.stringify(levels));
-            } catch (e) {
+            } catch(e) {
                 alert("Erreur inconnue :(");
             }
         }
@@ -220,23 +232,24 @@ function loadLevel(room) {
 function getParameterByName(name, url) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+    const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
         results = regex.exec(url);
     if (!results) return null;
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
+let level;
 if (getParameterByName('storage', window.location.href) === "") {
     try {
-        var level = JSON.parse(localStorage.getItem("nubium_levels"))[getParameterByName('level', window.location.href)];
+        level = JSON.parse(localStorage.getItem("nubium_levels"))[getParameterByName('level', window.location.href)];
         loadLevel(level);
     } catch (e) {
         alert("Niveau invalide :(");
     }
 } else if(getParameterByName('editor', window.location.href) === "") {
     try {
-        var level = JSON.parse(localStorage.getItem("nubium_editor"));
+        level = JSON.parse(localStorage.getItem("nubium_editor"));
         loadLevel(level);
         $('#main-menu').remove();
     } catch (e) {
